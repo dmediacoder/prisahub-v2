@@ -63,7 +63,7 @@ function parseJobDetail(html) {
 
 async function getUnenrichedJobs() {
   const r = await fetch(
-    SUPABASE_URL + '/rest/v1/jobs?enriched=eq.false&select=id,url&limit=50',
+    SUPABASE_URL + '/rest/v1/jobs?enriched=eq.false&select=id,url&limit=200',
     {
       headers: {
         'apikey':        SUPABASE_KEY,
@@ -110,7 +110,7 @@ export default async function handler(req, res) {
       await updateJob(job.id, detail);
       enriched++;
       // Small delay to avoid hammering NHS Jobs
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise(resolve => setTimeout(resolve, 100));
     } catch {
       errors++;
       await updateJob(job.id, { enriched: true }); // mark as done to avoid retry loop
