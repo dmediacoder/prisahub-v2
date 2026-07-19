@@ -192,6 +192,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Cache-Control',                'public, max-age=60');
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+  try {
 
   const { category, page='1', sponsor='false' } = req.query;
   const pg          = Math.max(1, parseInt(page) || 1);
@@ -216,7 +217,11 @@ export default async function handler(req, res) {
     }
   );
 
-  if (!r.ok) return res.status(500).json({ error: 'Database error' });
+  if (!r.ok) {
+    const errText = await r.text();
+    console.error('Supabase error:', r.status, errText);
+    return res.status(500).json({ error: 'Database error', detail: errText, status: r.status });
+  }
 
   const allJobs = await r.json();
 
@@ -256,4 +261,8 @@ export default async function handler(req, res) {
       group:          catDef.group,
     })),
   });
+  } catch(e) {
+    console.error('Handler error:', e);
+    return res.status(500).json({ error: e.message });
+  }
 }
