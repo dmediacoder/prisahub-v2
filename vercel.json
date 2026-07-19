@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/fetch",
-      "schedule": "0 * * * *"
+      "schedule": "0 6 * * *"
     },
     {
       "path": "/api/enrich",
-      "schedule": "15 * * * *"
+      "schedule": "0 7 * * *"
     }
   ]
 }
