@@ -63,7 +63,7 @@ function parseJobDetail(html) {
 
 async function getUnenrichedJobs() {
   const r = await fetch(
-    SUPABASE_URL + '/rest/v1/jobs?enriched=eq.false&select=id,url&limit=5000',
+    SUPABASE_URL + '/rest/v1/jobs?enriched=eq.false&select=id,url&limit=200',
     {
       headers: {
         'apikey':        SUPABASE_KEY,
