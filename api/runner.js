@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+export default async function handler(req, res) {
+  res.setHeader('Content-Type', 'text/html');
+  res.status(200).send(`<!DOCTYPE html>
 <html>
 <head>
 <title>Prisahub - Enrich Jobs</title>
@@ -10,7 +12,6 @@ h2{color:#1e3a5f;margin-bottom:16px}
 .bar{background:linear-gradient(90deg,#3b82f6,#6366f1);height:20px;border-radius:8px;transition:width .5s;width:0%}
 .status{font-size:14px;color:#64748b;margin:8px 0}
 .count{font-size:24px;font-weight:800;color:#1d4ed8;margin:8px 0}
-.done{color:#059669;font-size:18px;font-weight:700}
 button{background:#3b82f6;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600}
 button:disabled{opacity:.5;cursor:not-allowed}
 </style>
@@ -18,7 +19,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <body>
 <div class="box">
   <h2>🔄 Enrich All Jobs</h2>
-  <p style="color:#64748b;margin-bottom:20px">This will visit each job page to extract band numbers and sponsorship information. Each batch processes 200 jobs.</p>
+  <p style="color:#64748b;margin-bottom:20px">Visits each job page to extract band numbers and sponsorship info. Runs automatically until all jobs are done.</p>
   <div class="progress"><div class="bar" id="bar"></div></div>
   <div class="count" id="count">0 jobs enriched</div>
   <div class="status" id="status">Click Start to begin</div>
@@ -27,42 +28,30 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 <script>
 var total=0,running=false;
-
-async function runBatch(){
-  var r=await fetch('/api/enrich');
-  var d=await r.json();
-  return d;
-}
-
 async function start(){
   if(running)return;
   running=true;
   document.getElementById('btn').disabled=true;
-  document.getElementById('status').textContent='Running...';
-
-  var batches=0,maxBatches=30; // max 30 × 200 = 6000 jobs
-
-  while(batches<maxBatches){
-    document.getElementById('status').textContent='Processing batch '+(batches+1)+'...';
+  var batches=0;
+  while(batches<50){
+    document.getElementById('status').textContent='Running batch '+(batches+1)+'...';
     try{
-      var d=await runBatch();
-      total+=d.enriched||0;
+      var r=await fetch('/api/enrich');
+      var d=await r.json();
+      total+=(d.enriched||0);
       document.getElementById('count').textContent=total+' jobs enriched';
-      document.getElementById('bar').style.width=Math.min((batches+1)/maxBatches*100,100)+'%';
-
+      document.getElementById('bar').style.width=Math.min((batches+1)/15*100,100)+'%';
       if(!d.enriched||d.enriched===0){
-        // All done
         document.getElementById('status').textContent='';
-        document.getElementById('count').innerHTML='<span class="done">✅ All done! '+total+' jobs enriched</span>';
+        document.getElementById('count').innerHTML='<span style="color:#059669">✅ All done! '+total+' jobs enriched</span>';
         document.getElementById('bar').style.width='100%';
         document.getElementById('btn').textContent='✅ Complete';
         break;
       }
       batches++;
-      // Small pause between batches
       await new Promise(r=>setTimeout(r,1000));
     }catch(e){
-      document.getElementById('status').textContent='Error: '+e.message+' - retrying...';
+      document.getElementById('status').textContent='Retrying...';
       await new Promise(r=>setTimeout(r,3000));
     }
   }
@@ -70,4 +59,5 @@ async function start(){
 }
 </script>
 </body>
-</html>
+</html>`);
+}
