@@ -231,15 +231,16 @@ var CATS_ENGLAND=[
 ];
 
 var CATS_SCOTLAND=[
-  {id:'scot-sw',    label:'Support Worker',   icon:'🤝', g:'Support Worker'},
-  {id:'scot-nurse', label:'Staff Nurse',      icon:'👩‍⚕️',g:'Nursing'},
-  {id:'scot-admin', label:'Admin Roles',      icon:'📋', g:'Admin'},
-  {id:'scot-hr',    label:'HR',               icon:'👥', g:'Professional'},
-  {id:'scot-pm',    label:'Project Manager',  icon:'📌', g:'Professional'},
-  {id:'scot-data',  label:'Data Analyst',     icon:'📈', g:'Professional'},
-  {id:'scot-it',    label:'IT / Engineering', icon:'⚙️', g:'Professional'},
-  {id:'scot-est',   label:'Estates',          icon:'🏗️', g:'Professional'},
-  {id:'scot-sw2',   label:'Social Worker',    icon:'🫂', g:'Clinical'},
+  {id:'scot-sw',     label:'Support Worker',   icon:'🤝', g:'Support Worker'},
+  {id:'scot-nurse',  label:'Staff Nurse',      icon:'👩‍⚕️',g:'Nursing'},
+  {id:'scot-admin',  label:'Admin Roles',      icon:'📋', g:'Admin'},
+  {id:'scot-general',label:'General',          icon:'🏴', g:'General'},
+  {id:'scot-hr',     label:'HR',               icon:'👥', g:'Professional'},
+  {id:'scot-pm',     label:'Project Manager',  icon:'📌', g:'Professional'},
+  {id:'scot-data',   label:'Data Analyst',     icon:'📈', g:'Professional'},
+  {id:'scot-it',     label:'IT / Engineering', icon:'⚙️', g:'Professional'},
+  {id:'scot-est',    label:'Estates',          icon:'🏗️', g:'Professional'},
+  {id:'scot-sw2',    label:'Social Worker',    icon:'🫂', g:'Clinical'},
 ];
 
 var CATS_CIVIL=[
@@ -270,7 +271,7 @@ function switchSite(site){
   document.getElementById('sponsor-btn').classList.remove('active');
   document.querySelectorAll('.site-tab').forEach(function(b){b.classList.toggle('active',b.dataset.site===site);});
   if(site==='england'){CATS=CATS_ENGLAND;_cat='admin-out';document.getElementById('ptitle').textContent='NHS England Jobs';document.getElementById('hbadge').textContent='LIVE';}
-  else if(site==='scotland'){CATS=CATS_SCOTLAND;_cat='scot-sw';document.getElementById('ptitle').textContent='NHS Scotland Jobs';document.getElementById('hbadge').textContent='SCOTLAND';}
+  else if(site==='scotland'){CATS=CATS_SCOTLAND;_cat='scot-general';document.getElementById('ptitle').textContent='NHS Scotland Jobs';document.getElementById('hbadge').textContent='SCOTLAND';}
   else{CATS=CATS_CIVIL;_cat='cs-admin';document.getElementById('ptitle').textContent='Civil Service Jobs';document.getElementById('hbadge').textContent='GOV.UK';}
   sidebar();load(1);
 }
