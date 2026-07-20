@@ -4,7 +4,18 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const MONTHS={january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12,jan:1,feb:2,mar:3,apr:4,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
 function parseDate(s){if(!s)return null;const m=s.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);if(m){const mo=MONTHS[m[2].toLowerCase()];if(mo)return m[3]+'-'+String(mo).padStart(2,'0')+'-'+m[1].padStart(2,'0');}return null;}
 
-function isNhs(org){const o=(org||'').toLowerCase();return o.includes('nhs')||o.includes('trust')||o.includes('hospital')||o.includes('health board')||o.includes('integrated care')||o.includes('ambulance')||o.includes('foundation')||o.includes('primary care')||o.includes('healthcare');}
+function isNhs(org){
+  const o=(org||'').toLowerCase();
+  if(o.includes('nhs')) return true;
+  if(o.includes('health board')) return true;
+  if(o.includes('integrated care')) return true;
+  if(o.includes('ambulance')&&o.includes('service')) return true;
+  if(o.includes('university hospitals')) return true;
+  if((o.includes('royal')&&(o.includes('hospital')||o.includes('infirmary')))) return true;
+  if(o.includes('foundation trust')) return true;
+  if(o.includes('hospital trust')) return true;
+  return false;
+}
 
 const SW_INC=['healthcare support worker','healthcare assistant','health care assistant','hcsw','hca','clinical support worker','nursing assistant','senior healthcare support worker','ward support worker','patient support worker','patient care assistant','assistant practitioner','therapy support worker','occupational therapy assistant','occupational therapy support worker','physiotherapy assistant','physiotherapy support worker','speech and language therapy assistant','therapy assistant','rehabilitation assistant','rehabilitation support worker','mental health support worker','mental health healthcare assistant','psychiatric support worker','psychiatric nursing assistant','mental health clinical support worker','picu support worker','crisis support worker','dementia support worker','forensic mental health support worker','learning disability support worker','autism support worker','positive behaviour support worker','behaviour support worker','intensive support worker','community support worker','community healthcare support worker','community rehabilitation support worker','community mental health support worker','maternity support worker','maternity care assistant','neonatal support worker','neonatal healthcare assistant','paediatric support worker','nursery assistant','theatre support worker','operating department support worker','perioperative support worker','endoscopy support worker','sterile services support worker','emergency department support worker','a&e support worker','critical care support worker','icu support worker','hdu support worker','renal support worker','dialysis support worker','oncology support worker','cancer support worker','cardiology support worker','stroke support worker','respiratory support worker','orthopaedic support worker','diabetes support worker','palliative care support worker','hospice support worker','radiology support worker','imaging assistant','laboratory support worker','outpatient support worker','clinic support worker','gp healthcare assistant','primary care support worker','care navigator','peer support worker','mortuary assistant','decontamination support worker'];
 const SW_EXC=['registered nurse','staff nurse','charge nurse','ward sister','nurse specialist','nurse consultant','nurse practitioner','advanced nurse','community nurse','district nurse','school nurse','practice nurse','nurse associate','nursing associate','student nurse','midwife','midwifery','doctor','consultant','registrar','physician','surgeon','scientist','technician','physiologist','pharmacist','radiographer','psychologist','paramedic','sonographer','biomedical','healthcare scientist','clinical scientist','pharmacy technician','occupational therapist','physiotherapist','speech and language therapist','dietitian','dietician','podiatrist','social worker','ward manager','service manager','clinical manager','team manager','general manager','deputy manager','head of','director'];
@@ -72,33 +83,6 @@ const CATS={
   'coord':     {label:'Coordinator',                   group:'Coordinator',                                   inc:COORD_INC},
   'est':       {label:'Estates',                       group:'Estates',                                       inc:EST_INC},
 
-  // NHS SCOTLAND - no inc/exc filters needed, already categorized by fetch.js
-  'scot-sw':    {label:'Support Worker',   group:'Scotland Support Worker', source:'scotland'},
-  'scot-nurse': {label:'Staff Nurse',      group:'Scotland Nursing',        source:'scotland'},
-  'scot-admin': {label:'Admin Roles',      group:'Scotland Admin',          source:'scotland'},
-  'scot-general':{label:'General',         group:'Scotland General',        source:'scotland'},
-  'scot-hr':    {label:'HR',               group:'Scotland HR',             source:'scotland'},
-  'scot-pm':    {label:'Project Manager',  group:'Scotland Project Manager',source:'scotland'},
-  'scot-data':  {label:'Data Analyst',     group:'Scotland Data Analyst',   source:'scotland'},
-  'scot-it':    {label:'IT / Engineering', group:'Scotland IT',             source:'scotland'},
-  'scot-est':   {label:'Estates',          group:'Scotland Estates',        source:'scotland'},
-  'scot-sw2':   {label:'Social Worker',    group:'Scotland Social Worker',  source:'scotland'},
-
-  // CIVIL SERVICE - no inc/exc filters needed, already categorized by fetch.js
-  'cs-admin':    {label:'Admin Officer',    group:'Civil Service Admin',            source:'civil'},
-  'cs-policy':   {label:'Policy',           group:'Civil Service Policy',           source:'civil'},
-  'cs-data':     {label:'Data Analyst',     group:'Civil Service Data',             source:'civil'},
-  'cs-tech':     {label:'Technology',       group:'Civil Service Technology',       source:'civil'},
-  'cs-cyber':    {label:'Cyber Security',   group:'Civil Service Cyber Security',   source:'civil'},
-  'cs-digital':  {label:'Digital',          group:'Civil Service Digital',          source:'civil'},
-  'cs-pm':       {label:'Project Manager',  group:'Civil Service Project Manager',  source:'civil'},
-  'cs-hr':       {label:'HR',               group:'Civil Service HR',               source:'civil'},
-  'cs-fin':      {label:'Finance',          group:'Civil Service Finance',          source:'civil'},
-  'cs-econ':     {label:'Economist',        group:'Civil Service Economist',        source:'civil'},
-  'cs-ba':       {label:'Business Analyst', group:'Civil Service Business Analyst', source:'civil'},
-  'cs-delivery': {label:'Delivery Manager', group:'Civil Service Delivery Manager', source:'civil'},
-  'cs-fraud':    {label:'Fraud Officer',    group:'Civil Service Fraud',            source:'civil'},
-  'cs-case':     {label:'Caseworker',       group:'Civil Service Caseworker',       source:'civil'},
 };
 
 function passesFilter(job,cat,sponsorOnly){
@@ -140,8 +124,7 @@ export default async function handler(req,res){
     if(!category)return res.status(200).json({total:0,page:1,pages:0,jobs:[]});
     const cat=CATS[category];
     if(!cat)return res.status(404).json({error:'Unknown category: '+category});
-    const sourceFilter = cat.source ? '&source=eq.'+encodeURIComponent(cat.source) : '';
-    const url=SUPABASE_URL+'/rest/v1/jobs?category=eq.'+encodeURIComponent(cat.group)+sourceFilter+'&select=*&order=posted.desc.nullslast&limit=1000';
+    const url=SUPABASE_URL+'/rest/v1/jobs?category=eq.'+encodeURIComponent(cat.group)+'&source=eq.england&select=*&order=posted.desc.nullslast&limit=1000';
     const r=await fetch(url,{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
     if(!r.ok){const txt=await r.text();return res.status(500).json({error:'Supabase error',status:r.status,detail:txt});}
     const allJobs=await r.json();
