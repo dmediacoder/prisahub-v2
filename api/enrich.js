@@ -39,7 +39,7 @@ function parseJobDetail(html) {
   }
 
   // Certificate of Sponsorship
-  const hasSponsor =
+  const hassponsor =
     text.includes('certificate of sponsorship') ||
     text.includes('skilled worker sponsorship') ||
     text.includes('visa sponsorship') ||
@@ -58,7 +58,7 @@ function parseJobDetail(html) {
   const isPermanent = text.includes('permanent');
   const isFixedTerm = text.includes('fixed term') || text.includes('fixed-term');
 
-  return { band, hasSponsor, workingPattern, isFullTime, isPartTime, isPermanent, isFixedTerm };
+  return { band, hassponsor, workingPattern, isFullTime, isPartTime, isPermanent, isFixedTerm };
 }
 
 async function getUnenrichedJobs() {
