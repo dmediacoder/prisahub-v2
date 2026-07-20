@@ -340,7 +340,7 @@ function render(){
     if(j.salary)       tgs+='<span class="tag t-salary">'+esc(j.salary)+'</span>';
     if(j.contractType) tgs+='<span class="tag t-perm">'+esc(j.contractType)+'</span>';
     if(j.closingDate)  tgs+='<span class="tag t-close">Closes '+esc(j.closingDate)+'</span>';
-    if(j.hasSponsor)   tgs+='<span class="tag t-sponsor">✈️ Sponsorship</span>';
+    if(j.hassponsor)   tgs+='<span class="tag t-sponsor">✈️ Sponsorship</span>';
     return '<div class="job-card">'
       +'<div class="job-card-left"><div class="job-logo">'+EM[i%EM.length]+'</div></div>'
       +'<div class="job-body">'
