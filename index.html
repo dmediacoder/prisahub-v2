@@ -146,16 +146,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:#f8faff;color:#0f172a;f
         <span class="site-tab-label">NHS England</span>
         <span class="site-tab-dot"></span>
       </button>
-      <button class="site-tab" data-site="scotland">
-        <span class="site-tab-icon">🏴</span>
-        <span class="site-tab-label">NHS Scotland</span>
-        <span class="site-tab-dot"></span>
-      </button>
-      <button class="site-tab" data-site="civil">
-        <span class="site-tab-icon">🏛️</span>
-        <span class="site-tab-label">Civil Service</span>
-        <span class="site-tab-dot"></span>
-      </button>
+
     </div>
   </div>
   <div class="sb-divider"></div>
@@ -230,51 +221,14 @@ var CATS_ENGLAND=[
   {id:'est',       label:'Estates',                       icon:'🏗️',g:'Professional'},
 ];
 
-var CATS_SCOTLAND=[
-  {id:'scot-sw',     label:'Support Worker',   icon:'🤝', g:'Support Worker'},
-  {id:'scot-nurse',  label:'Staff Nurse',      icon:'👩‍⚕️',g:'Nursing'},
-  {id:'scot-admin',  label:'Admin Roles',      icon:'📋', g:'Admin'},
-  {id:'scot-general',label:'General',          icon:'🏴', g:'General'},
-  {id:'scot-hr',     label:'HR',               icon:'👥', g:'Professional'},
-  {id:'scot-pm',     label:'Project Manager',  icon:'📌', g:'Professional'},
-  {id:'scot-data',   label:'Data Analyst',     icon:'📈', g:'Professional'},
-  {id:'scot-it',     label:'IT / Engineering', icon:'⚙️', g:'Professional'},
-  {id:'scot-est',    label:'Estates',          icon:'🏗️', g:'Professional'},
-  {id:'scot-sw2',    label:'Social Worker',    icon:'🫂', g:'Clinical'},
-];
 
-var CATS_CIVIL=[
-  {id:'cs-admin',   label:'Admin Officer',    icon:'📋', g:'Admin'},
-  {id:'cs-policy',  label:'Policy',           icon:'📜', g:'Professional'},
-  {id:'cs-data',    label:'Data Analyst',     icon:'📈', g:'Technology'},
-  {id:'cs-tech',    label:'Technology',       icon:'💻', g:'Technology'},
-  {id:'cs-cyber',   label:'Cyber Security',   icon:'🔐', g:'Technology'},
-  {id:'cs-digital', label:'Digital',          icon:'⚡', g:'Technology'},
-  {id:'cs-pm',      label:'Project Manager',  icon:'📌', g:'Professional'},
-  {id:'cs-hr',      label:'HR',               icon:'👥', g:'Professional'},
-  {id:'cs-fin',     label:'Finance',          icon:'💰', g:'Professional'},
-  {id:'cs-econ',    label:'Economist',        icon:'📊', g:'Professional'},
-  {id:'cs-ba',      label:'Business Analyst', icon:'📉', g:'Professional'},
-  {id:'cs-delivery',label:'Delivery Manager', icon:'🚀', g:'Professional'},
-  {id:'cs-fraud',   label:'Fraud Officer',    icon:'🔍', g:'Enforcement'},
-  {id:'cs-case',    label:'Caseworker',       icon:'📁', g:'Enforcement'},
-];
+var CATS=CATS_ENGLAND;
 
 var CATS=CATS_ENGLAND;
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function switchSite(site){
-  _site=site;
-  _kw='';_pg=1;_sponsor=false;
-  document.getElementById('s-input').value='';
-  document.getElementById('sponsor-btn').classList.remove('active');
-  document.querySelectorAll('.site-tab').forEach(function(b){b.classList.toggle('active',b.dataset.site===site);});
-  if(site==='england'){CATS=CATS_ENGLAND;_cat='admin-out';document.getElementById('ptitle').textContent='NHS England Jobs';document.getElementById('hbadge').textContent='LIVE';}
-  else if(site==='scotland'){CATS=CATS_SCOTLAND;_cat='scot-general';document.getElementById('ptitle').textContent='NHS Scotland Jobs';document.getElementById('hbadge').textContent='SCOTLAND';}
-  else{CATS=CATS_CIVIL;_cat='cs-admin';document.getElementById('ptitle').textContent='Civil Service Jobs';document.getElementById('hbadge').textContent='GOV.UK';}
-  sidebar();load(1);
-}
+
 
 function toggleSponsor(){
   _sponsor=!_sponsor;
@@ -386,9 +340,6 @@ function skel(){
 }
 
 // Init
-document.querySelectorAll('.site-tab').forEach(function(b){
-  b.addEventListener('click',function(){switchSite(b.dataset.site);});
-});
 sidebar();
 load(1);
 document.getElementById('s-input').addEventListener('input',function(){
