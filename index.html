@@ -3,141 +3,202 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Prisahub — Live NHS Job Links</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<title>Prisahub — Live Job Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:#f0f4ff;color:#0f172a;font-size:14px}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8faff;color:#0f172a;font-size:14px}
+
+/* SHELL */
 .shell{display:flex;min-height:100vh}
-.sidebar{width:265px;flex-shrink:0;background:linear-gradient(160deg,#0f172a 0%,#1e3a5f 100%);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column}
-.sb-header{padding:22px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.sb-icon{width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.sb-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
-.sb-name span{color:#93c5fd}
-.sb-sub{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px}
-.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.22);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;color:#4ade80}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 2s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-.cat-scroll{flex:1;overflow-y:auto;padding:8px 8px 24px}
-.cat-scroll::-webkit-scrollbar{width:3px}
-.cat-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
-.grp-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.12em;padding:14px 10px 5px}
-.cat-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border:none;background:none;border-left:3px solid transparent;border-radius:0 8px 8px 0;font-family:inherit;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .13s;margin-bottom:1px;text-align:left}
-.cat-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
-.cat-btn.active{background:rgba(59,130,246,.16);color:#fff;font-weight:700;border-left-color:#3b82f6}
-.cat-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
-.cat-label{flex:1;line-height:1.35}
-.main{margin-left:265px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-.top-bar{background:#fff;border-bottom:1px solid #e2e8f0;padding:14px 28px;position:sticky;top:0;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.top-bar-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.page-title{font-size:20px;font-weight:800;color:#0f172a;letter-spacing:-.4px}
-.page-sub{font-size:12px;color:#64748b;margin-top:2px}
-.top-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.search-wrap{position:relative;width:240px}
-.s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#94a3b8;pointer-events:none}
-.s-input{width:100%;padding:9px 13px 9px 34px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:13px;color:#0f172a;background:#f8fafc;outline:none;transition:all .15s}
-.s-input:focus{border-color:#3b82f6;background:#fff;box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+
+/* SIDEBAR */
+.sidebar{width:260px;flex-shrink:0;background:#0f172a;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:0}
+
+.sb-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sb-name{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.sb-name span{color:#60a5fa}
+.sb-tag{font-size:9.5px;color:rgba(255,255,255,.3);font-weight:500;letter-spacing:.05em;margin-top:1px}
+
+/* SITE TABS */
+.site-tabs{display:flex;flex-direction:column;gap:3px;padding:0 10px 12px}
+.site-tab{display:flex;align-items:center;gap:8px;padding:8px 10px;border:none;background:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;transition:all .15s;text-align:left;width:100%}
+.site-tab:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
+.site-tab.active{background:rgba(59,130,246,.15);color:#60a5fa}
+.site-tab-icon{font-size:14px;width:20px;text-align:center}
+.site-tab-label{flex:1}
+.site-tab-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0}
+
+.sb-divider{height:1px;background:rgba(255,255,255,.06);margin:4px 16px 8px}
+
+/* CAT LIST */
+.cat-scroll{flex:1;padding:4px 10px 20px;overflow-y:auto}
+.cat-scroll::-webkit-scrollbar{width:0}
+.grp-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.12em;padding:12px 6px 4px}
+.cat-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border:none;background:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:500;color:rgba(255,255,255,.45);cursor:pointer;transition:all .12s;margin-bottom:1px;text-align:left}
+.cat-btn:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.85)}
+.cat-btn.active{background:rgba(59,130,246,.12);color:#93c5fd;font-weight:600}
+.cat-btn.active::before{content:'';width:3px;height:14px;background:#3b82f6;border-radius:2px;flex-shrink:0;margin-left:-2px;margin-right:6px}
+.cat-icon{font-size:13px;width:18px;text-align:center;flex-shrink:0;opacity:.8}
+.cat-label{flex:1;line-height:1.3}
+
+/* MAIN */
+.main{margin-left:260px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid #e8eef8;position:sticky;top:0;z-index:50}
+.header-top{padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.header-title{display:flex;align-items:center;gap:10px}
+.header-title h1{font-size:17px;font-weight:800;color:#0f172a;letter-spacing:-.3px}
+.header-title .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dbeafe;color:#1d4ed8}
+.header-controls{display:flex;align-items:center;gap:8px}
+.search-wrap{position:relative}
+.s-input{width:240px;padding:8px 12px 8px 36px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:13px;color:#0f172a;background:#f8fafc;outline:none;transition:all .15s}
+.s-input:focus{border-color:#3b82f6;background:#fff;box-shadow:0 0 0 3px rgba(59,130,246,.08);width:280px}
 .s-input::placeholder{color:#94a3b8}
-.sponsor-toggle{display:flex;align-items:center;gap:7px;padding:8px 14px;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;color:#374151;transition:all .15s;white-space:nowrap}
-.sponsor-toggle:hover{border-color:#3b82f6;color:#3b82f6}
-.sponsor-toggle.active{border-color:#22c55e;background:#f0fdf4;color:#166534}
-.sponsor-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;transition:background .15s}
-.sponsor-toggle.active .sponsor-dot{background:#22c55e}
-.stats-strip{background:#fff;border-bottom:1px solid #e8eef8;display:flex;overflow-x:auto;padding:0 28px}
-.stat{padding:10px 18px;text-align:center;border-right:1px solid #f1f5f9;flex-shrink:0;min-width:95px}
-.stat:last-child{border-right:none}
-.stat-n{font-size:17px;font-weight:800;line-height:1}
-.stat-l{font-size:10px;color:#94a3b8;margin-top:2px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;opacity:.5}
+.sponsor-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;font-family:inherit;font-size:12.5px;font-weight:600;color:#475569;cursor:pointer;transition:all .15s;white-space:nowrap}
+.sponsor-btn:hover{border-color:#94a3b8;color:#0f172a}
+.sponsor-btn.active{border-color:#22c55e;background:#f0fdf4;color:#166534}
+.sponsor-btn .dot{width:7px;height:7px;border-radius:50%;background:#cbd5e1;transition:background .15s;flex-shrink:0}
+.sponsor-btn.active .dot{background:#22c55e}
+
+/* STATS BAR */
+.stats-bar{background:#fff;border-bottom:1px solid #e8eef8;padding:0 28px;display:flex;align-items:center;gap:0}
+.stat{padding:9px 20px;border-right:1px solid #f1f5f9;flex-shrink:0;text-align:center}
+.stat:first-child{padding-left:0}
+.stat-n{font-size:15px;font-weight:800;line-height:1}
+.stat-l{font-size:9.5px;color:#94a3b8;margin-top:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+
+/* CONTENT */
 .content{padding:20px 28px;flex:1}
-.filter-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
-.res-label{font-size:13px;color:#64748b;font-weight:500}
-.res-label strong{color:#0f172a}
-.job-card{background:#fff;border:1.5px solid #e8eef8;border-radius:14px;padding:15px 18px;display:flex;align-items:flex-start;gap:13px;transition:all .17s;position:relative;overflow:hidden;margin-bottom:9px}
-.job-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#3b82f6,#6366f1);opacity:0;transition:opacity .17s;border-radius:14px 0 0 14px}
-.job-card:hover{border-color:#bfdbfe;box-shadow:0 4px 18px rgba(59,130,246,.08);transform:translateY(-1px)}
-.job-card:hover::before{opacity:1}
-.job-logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#eff6ff,#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid #dde8ff}
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.result-count{font-size:13px;color:#64748b;font-weight:500}
+.result-count strong{color:#0f172a;font-weight:700}
+
+/* JOB CARDS */
+.job-card{background:#fff;border:1px solid #e8eef8;border-radius:16px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;transition:all .18s;position:relative;margin-bottom:10px;cursor:default}
+.job-card:hover{border-color:#c7d7f8;box-shadow:0 4px 24px rgba(59,130,246,.07);transform:translateY(-1px)}
+.job-card-left{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}
+.job-logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#eff6ff,#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid #e0e7ff}
 .job-body{flex:1;min-width:0}
-.job-title{font-size:14.5px;font-weight:700;color:#0f172a;margin-bottom:2px;line-height:1.35}
-.job-org{font-size:12.5px;color:#2563eb;font-weight:600;margin-bottom:6px}
-.job-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:#64748b;margin-bottom:8px}
+.job-title{font-size:14.5px;font-weight:700;color:#0f172a;margin-bottom:3px;line-height:1.35}
+.job-org{font-size:12.5px;color:#3b82f6;font-weight:600;margin-bottom:7px}
+.job-meta{display:flex;flex-wrap:wrap;gap:6px;font-size:11.5px;color:#64748b;margin-bottom:8px;align-items:center}
+.job-meta span{display:flex;align-items:center;gap:3px}
 .job-tags{display:flex;flex-wrap:wrap;gap:5px}
-.tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:6px}
-.t-band{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
-.t-salary{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
-.t-perm{background:#faf5ff;color:#6d28d9;border:1px solid #e9d5ff}
+.tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px}
+.t-band{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe}
+.t-salary{background:#f0fdf4;color:#15803d;border:1px solid #dcfce7}
+.t-perm{background:#faf5ff;color:#7c3aed;border:1px solid #ede9fe}
 .t-close{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
-.t-sponsor{background:#f0fdf4;color:#166534;border:1px solid #86efac;font-weight:700}
+.t-sponsor{background:#f0fdf4;color:#15803d;border:1px solid #86efac;font-weight:700}
 .job-actions{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0}
-.cp-btn{width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#f8fafc;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#94a3b8;transition:all .15s;font-size:13px}
+.cp-btn{width:32px;height:32px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s;color:#94a3b8}
 .cp-btn:hover{border-color:#3b82f6;color:#3b82f6;background:#eff6ff}
 .cp-btn.done{border-color:#22c55e;color:#22c55e;background:#f0fdf4}
-.view-btn{padding:9px 15px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;white-space:nowrap;transition:all .17s;box-shadow:0 2px 8px rgba(59,130,246,.25)}
-.view-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(59,130,246,.35);color:#fff}
+.view-btn{padding:9px 16px;background:#0f172a;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;transition:all .17s}
+.view-btn:hover{background:#1e293b;transform:translateY(-1px);color:#fff}
+
+/* STATES */
 .loading-wrap{text-align:center;padding:80px 20px}
-.spinner{width:40px;height:40px;border:3px solid #e2e8f0;border-top-color:#3b82f6;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+.spinner{width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#3b82f6;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-wrap p{font-size:14px;color:#64748b;margin-top:8px}
+.loading-wrap p{font-size:14px;color:#64748b}
 .empty{text-align:center;padding:70px 20px}
-.empty-e{font-size:50px;margin-bottom:14px;display:block}
-.empty h3{font-size:17px;font-weight:700;color:#64748b;margin-bottom:8px}
-.empty p{font-size:13px;line-height:1.7;max-width:340px;margin:0 auto;color:#94a3b8}
-.skeleton{background:linear-gradient(90deg,#f1f5f9 25%,#e8eef8 50%,#f1f5f9 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px}
+.empty-icon{font-size:48px;margin-bottom:14px;display:block;opacity:.6}
+.empty h3{font-size:16px;font-weight:700;color:#475569;margin-bottom:8px}
+.empty p{font-size:13px;line-height:1.7;max-width:320px;margin:0 auto;color:#94a3b8}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,#f1f5f9 25%,#e8eef8 50%,#f1f5f9 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
 @keyframes shimmer{to{background-position:-200% 0}}
-.sk-card{background:#fff;border:1.5px solid #e8eef8;border-radius:14px;padding:15px 18px;display:flex;gap:13px;margin-bottom:9px}
-.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;padding-bottom:40px}
-.pg-btn{padding:7px 16px;border:1.5px solid #e2e8f0;border-radius:9px;background:#fff;font-family:inherit;font-size:12.5px;font-weight:600;color:#374151;cursor:pointer;transition:all .15s}
-.pg-btn:hover{border-color:#3b82f6;color:#3b82f6}
-.pg-btn:disabled{opacity:.35;cursor:not-allowed}
-.pg-info{font-size:13px;color:#64748b;font-weight:500}
-.setup-banner{background:#fef3c7;border:1.5px solid #fde68a;border-radius:12px;padding:16px 20px;margin:20px 28px;font-size:13px;color:#92400e;line-height:1.6}
-.setup-banner strong{display:block;font-size:14px;margin-bottom:4px}
-@media(max-width:880px){
-  .sidebar{width:100%;position:static}.shell{flex-direction:column}.main{margin-left:0}
-  .top-bar,.content{padding:14px 16px}.stats-strip{padding:0 14px}.search-wrap{width:100%}.top-controls{width:100%}
+.sk-card{background:#fff;border:1px solid #e8eef8;border-radius:16px;padding:16px 18px;display:flex;gap:14px;margin-bottom:10px}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;padding-bottom:40px}
+.pg-btn{padding:8px 18px;border:1.5px solid #e2e8f0;border-radius:10px;background:#fff;font-family:inherit;font-size:12.5px;font-weight:600;color:#374151;cursor:pointer;transition:all .15s}
+.pg-btn:hover{border-color:#3b82f6;color:#3b82f6;background:#eff6ff}
+.pg-btn:disabled{opacity:.3;cursor:not-allowed}
+.pg-info{font-size:12.5px;color:#94a3b8;font-weight:500;padding:0 4px}
+
+@media(max-width:900px){
+  .sidebar{width:100%;position:static;flex-direction:row;flex-wrap:wrap}.shell{flex-direction:column}.main{margin-left:0}
+  .header-top,.content{padding:14px 16px}.stats-bar{padding:0 16px}
+  .s-input{width:180px}.s-input:focus{width:200px}
 }
 </style>
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
-  <div class="sb-header">
+  <div class="sb-logo">
     <div class="sb-brand">
-      <div class="sb-icon">🏥</div>
-      <div><div class="sb-name">Prisa<span>hub</span></div><div class="sb-sub">NHS JOB LINKS</div></div>
+      <div class="sb-icon">⚕️</div>
+      <div><div class="sb-name">Prisa<span>hub</span></div><div class="sb-tag">LIVE JOB LINKS</div></div>
     </div>
-    <div class="live-badge"><span class="live-dot"></span>Live NHS Jobs</div>
+    <div class="site-tabs" id="site-tabs">
+      <button class="site-tab active" data-site="england">
+        <span class="site-tab-icon">🏥</span>
+        <span class="site-tab-label">NHS England</span>
+        <span class="site-tab-dot"></span>
+      </button>
+      <button class="site-tab" data-site="scotland">
+        <span class="site-tab-icon">🏴</span>
+        <span class="site-tab-label">NHS Scotland</span>
+        <span class="site-tab-dot"></span>
+      </button>
+      <button class="site-tab" data-site="civil">
+        <span class="site-tab-icon">🏛️</span>
+        <span class="site-tab-label">Civil Service</span>
+        <span class="site-tab-dot"></span>
+      </button>
+    </div>
   </div>
+  <div class="sb-divider"></div>
   <div class="cat-scroll" id="cat-list"></div>
 </aside>
+
 <main class="main">
-  <div class="top-bar">
-    <div class="top-bar-row">
-      <div><div class="page-title" id="ptitle">🏥 NHS Jobs</div><div class="page-sub" id="psub">Live permanent NHS vacancies</div></div>
-      <div class="top-controls">
-        <button class="sponsor-toggle" id="sponsor-btn" onclick="toggleSponsor()">
-          <span class="sponsor-dot"></span>Sponsorship Available
+  <div class="header">
+    <div class="header-top">
+      <div class="header-title">
+        <h1 id="ptitle">NHS England Jobs</h1>
+        <span class="badge" id="hbadge">LIVE</span>
+      </div>
+      <div class="header-controls">
+        <button class="sponsor-btn" id="sponsor-btn" onclick="toggleSponsor()">
+          <span class="dot"></span>Sponsorship
         </button>
-        <div class="search-wrap"><span class="s-icon">🔍</span><input class="s-input" id="s-input" placeholder="Search title, location..."/></div>
+        <div class="search-wrap">
+          <span class="s-icon">🔍</span>
+          <input class="s-input" id="s-input" placeholder="Search jobs..."/>
+        </div>
       </div>
     </div>
   </div>
-  <div class="stats-strip">
-    <div class="stat"><div class="stat-n" style="color:#6d28d9">100%</div><div class="stat-l">Permanent</div></div>
-    <div class="stat"><div class="stat-n" style="color:#059669">29</div><div class="stat-l">Categories</div></div>
-    <div class="stat"><div class="stat-n" id="sn-upd" style="color:#f59e0b;font-size:11px">Live</div><div class="stat-l">Updated</div></div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-n" style="color:#3b82f6" id="sn-total">—</div><div class="stat-l">Jobs Found</div></div>
+    <div class="stat"><div class="stat-n" style="color:#7c3aed">Permanent</div><div class="stat-l">Contract</div></div>
+    <div class="stat"><div class="stat-n" id="sn-upd" style="color:#f59e0b;font-size:11px">—</div><div class="stat-l">Updated</div></div>
   </div>
-  <div id="setup-msg"></div>
   <div class="content">
-    <div class="filter-bar"><div class="res-label" id="rlabel"></div></div>
+    <div class="content-header">
+      <div class="result-count" id="rlabel"></div>
+    </div>
     <div id="jlist"></div>
     <div class="pagination" id="pgn"></div>
   </div>
 </main>
 </div>
+
 <script>
-var CATS=[
+var _site='england',_cat='admin-out',_kw='',_pg=1,_pgs=1,_tot=0,_jobs=[],_tmr=null,_busy=false,_sponsor=false;
+
+var CATS_ENGLAND=[
   {id:'admin-out', label:'Admin Outside London',          icon:'📋',g:'Admin'},
   {id:'admin-lon', label:'Admin in London',               icon:'📋',g:'Admin'},
   {id:'sw-out',    label:'Support Worker Outside London', icon:'🤝',g:'Support Worker'},
@@ -169,14 +230,54 @@ var CATS=[
   {id:'est',       label:'Estates',                       icon:'🏗️',g:'Professional'},
 ];
 
-var _cat='admin-out',_kw='',_pg=1,_pgs=1,_tot=0,_jobs=[],_tmr=null,_busy=false,_sponsor=false;
+var CATS_SCOTLAND=[
+  {id:'scot-sw',    label:'Support Worker',   icon:'🤝', g:'Support Worker'},
+  {id:'scot-nurse', label:'Staff Nurse',      icon:'👩‍⚕️',g:'Nursing'},
+  {id:'scot-admin', label:'Admin Roles',      icon:'📋', g:'Admin'},
+  {id:'scot-hr',    label:'HR',               icon:'👥', g:'Professional'},
+  {id:'scot-pm',    label:'Project Manager',  icon:'📌', g:'Professional'},
+  {id:'scot-data',  label:'Data Analyst',     icon:'📈', g:'Professional'},
+  {id:'scot-it',    label:'IT / Engineering', icon:'⚙️', g:'Professional'},
+  {id:'scot-est',   label:'Estates',          icon:'🏗️', g:'Professional'},
+  {id:'scot-sw2',   label:'Social Worker',    icon:'🫂', g:'Clinical'},
+];
+
+var CATS_CIVIL=[
+  {id:'cs-admin',   label:'Admin Officer',    icon:'📋', g:'Admin'},
+  {id:'cs-policy',  label:'Policy',           icon:'📜', g:'Professional'},
+  {id:'cs-data',    label:'Data Analyst',     icon:'📈', g:'Technology'},
+  {id:'cs-tech',    label:'Technology',       icon:'💻', g:'Technology'},
+  {id:'cs-cyber',   label:'Cyber Security',   icon:'🔐', g:'Technology'},
+  {id:'cs-digital', label:'Digital',          icon:'⚡', g:'Technology'},
+  {id:'cs-pm',      label:'Project Manager',  icon:'📌', g:'Professional'},
+  {id:'cs-hr',      label:'HR',               icon:'👥', g:'Professional'},
+  {id:'cs-fin',     label:'Finance',          icon:'💰', g:'Professional'},
+  {id:'cs-econ',    label:'Economist',        icon:'📊', g:'Professional'},
+  {id:'cs-ba',      label:'Business Analyst', icon:'📉', g:'Professional'},
+  {id:'cs-delivery',label:'Delivery Manager', icon:'🚀', g:'Professional'},
+  {id:'cs-fraud',   label:'Fraud Officer',    icon:'🔍', g:'Enforcement'},
+  {id:'cs-case',    label:'Caseworker',       icon:'📁', g:'Enforcement'},
+];
+
+var CATS=CATS_ENGLAND;
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
+function switchSite(site){
+  _site=site;
+  _kw='';_pg=1;_sponsor=false;
+  document.getElementById('s-input').value='';
+  document.getElementById('sponsor-btn').classList.remove('active');
+  document.querySelectorAll('.site-tab').forEach(function(b){b.classList.toggle('active',b.dataset.site===site);});
+  if(site==='england'){CATS=CATS_ENGLAND;_cat='admin-out';document.getElementById('ptitle').textContent='NHS England Jobs';document.getElementById('hbadge').textContent='LIVE';}
+  else if(site==='scotland'){CATS=CATS_SCOTLAND;_cat='scot-sw';document.getElementById('ptitle').textContent='NHS Scotland Jobs';document.getElementById('hbadge').textContent='SCOTLAND';}
+  else{CATS=CATS_CIVIL;_cat='cs-admin';document.getElementById('ptitle').textContent='Civil Service Jobs';document.getElementById('hbadge').textContent='GOV.UK';}
+  sidebar();load(1);
+}
+
 function toggleSponsor(){
   _sponsor=!_sponsor;
-  var btn=document.getElementById('sponsor-btn');
-  if(_sponsor){btn.classList.add('active');}else{btn.classList.remove('active');}
+  document.getElementById('sponsor-btn').classList.toggle('active',_sponsor);
   _pg=1;load(1);
 }
 
@@ -184,30 +285,24 @@ async function load(pg){
   if(_busy)return;
   _busy=true;_pg=pg||1;skel();
   try{
+    var cat=CATS.find(function(c){return c.id===_cat;})||CATS[0];
     var q='/api/jobs?page='+_pg+'&category='+encodeURIComponent(_cat);
-    if(_kw)     q+='&keyword='+encodeURIComponent(_kw);
-    if(_sponsor) q+='&sponsor=true';
+    if(_kw)q+='&keyword='+encodeURIComponent(_kw);
+    if(_sponsor)q+='&sponsor=true';
     var r=await fetch(q);
     if(!r.ok)throw new Error('HTTP '+r.status);
     var d=await r.json();
     _jobs=d.jobs||[];_pgs=d.pages||1;_tot=d.total||0;
+    document.getElementById('sn-total').textContent=_tot;
     document.getElementById('sn-upd').textContent=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-    render();pgn();hdr();
+    document.getElementById('rlabel').innerHTML=_tot>0?'Showing <strong>'+_jobs.length+'</strong> of <strong>'+_tot+'</strong> results':'';
+    render();pgn();
   }catch(ex){
-    document.getElementById('jlist').innerHTML='<div class="empty"><span class="empty-e">⚠️</span><h3>Could not load jobs</h3><p><a href="javascript:void(0)" onclick="_busy=false;load(1)" style="color:#3b82f6;font-weight:600">Try again</a></p></div>';
+    document.getElementById('jlist').innerHTML='<div class="empty"><span class="empty-icon">⚠️</span><h3>Could not load jobs</h3><p><a href="javascript:void(0)" onclick="_busy=false;load(1)" style="color:#3b82f6;font-weight:600">Try again</a></p></div>';
     document.getElementById('pgn').innerHTML='';
     _busy=false;return;
   }
   _busy=false;
-}
-
-function hdr(){
-  var c=CATS.find(function(x){return x.id===_cat;})||CATS[0];
-  document.getElementById('ptitle').textContent=c.icon+' '+c.label;
-  document.getElementById('psub').textContent=_tot+' permanent NHS '+(_tot===1?'vacancy':'vacancies')
-    +(_sponsor?' with sponsorship':'')
-    +(_kw?' matching "'+_kw+'"':'');
-  document.getElementById('rlabel').innerHTML=_tot>0?'Showing <strong>'+_jobs.length+'</strong> of <strong>'+_tot+'</strong> jobs':'';
 }
 
 function sidebar(){
@@ -229,25 +324,25 @@ function sidebar(){
   });
 }
 
-var EM=['🏥','🏨','🏛','🔬','💊','🩺','🧬','💉','🧪','🫀','🫁','🩻','🧠','🦷','🏃','⚕️','🎓','📋','🔭','🏋️'];
+var EM=['🏥','🏨','🏛','🔬','💊','🩺','🧬','💉','🧪','🫀','🫁','🩻','🧠','🦷','⚕️','🎓','📋','🔭','🏋️','💻'];
 
 function render(){
   var el=document.getElementById('jlist');
   if(!_jobs.length){
-    el.innerHTML='<div class="empty"><span class="empty-e">🔍</span><h3>No vacancies right now</h3><p>'
-      +(_sponsor?'No jobs with sponsorship in this category. Try turning off the sponsorship filter.':'No permanent jobs in this category right now. Check back soon.')
+    el.innerHTML='<div class="empty"><span class="empty-icon">🔍</span><h3>No vacancies right now</h3><p>'
+      +(_sponsor?'No jobs with sponsorship found. <a href="javascript:void(0)" onclick="toggleSponsor()" style="color:#3b82f6">Remove filter</a>':'No permanent jobs in this category right now. Check back soon.')
       +'</p></div>';
     return;
   }
   el.innerHTML=_jobs.map(function(j,i){
     var tgs='';
-    if(j.band)          tgs+='<span class="tag t-band">Band '+esc(String(j.band))+'</span>';
-    if(j.salary)        tgs+='<span class="tag t-salary">'+esc(j.salary)+'</span>';
-    if(j.contractType)  tgs+='<span class="tag t-perm">'+esc(j.contractType)+'</span>';
-    if(j.closingDate)   tgs+='<span class="tag t-close">Closes '+esc(j.closingDate)+'</span>';
-    if(j.hasSponsor)    tgs+='<span class="tag t-sponsor">✈️ Sponsorship</span>';
+    if(j.band)         tgs+='<span class="tag t-band">Band '+esc(String(j.band))+'</span>';
+    if(j.salary)       tgs+='<span class="tag t-salary">'+esc(j.salary)+'</span>';
+    if(j.contractType) tgs+='<span class="tag t-perm">'+esc(j.contractType)+'</span>';
+    if(j.closingDate)  tgs+='<span class="tag t-close">Closes '+esc(j.closingDate)+'</span>';
+    if(j.hasSponsor)   tgs+='<span class="tag t-sponsor">✈️ Sponsorship</span>';
     return '<div class="job-card">'
-      +'<div class="job-logo">'+EM[i%EM.length]+'</div>'
+      +'<div class="job-card-left"><div class="job-logo">'+EM[i%EM.length]+'</div></div>'
       +'<div class="job-body">'
         +'<div class="job-title">'+esc(j.title)+'</div>'
         +'<div class="job-org">'+esc(j.organisation||'NHS Trust')+'</div>'
@@ -259,7 +354,7 @@ function render(){
       +'</div>'
       +'<div class="job-actions">'
         +'<button class="cp-btn" data-url="'+esc(j.url)+'" title="Copy link">📋</button>'
-        +'<a href="'+esc(j.url)+'" target="_blank" class="view-btn">View Role →</a>'
+        +'<a href="'+esc(j.url)+'" target="_blank" class="view-btn">View →</a>'
       +'</div>'
     +'</div>';
   }).join('');
@@ -276,8 +371,8 @@ function render(){
 function pgn(){
   var el=document.getElementById('pgn');
   if(_pgs<=1){el.innerHTML='';return;}
-  el.innerHTML='<button class="pg-btn" id="pp" '+(_pg<=1?'disabled':'')+'>← Previous</button>'
-    +'<span class="pg-info">Page '+_pg+' of '+_pgs+'</span>'
+  el.innerHTML='<button class="pg-btn" id="pp" '+(_pg<=1?'disabled':'')+'>← Prev</button>'
+    +'<span class="pg-info">'+_pg+' / '+_pgs+'</span>'
     +'<button class="pg-btn" id="np" '+(_pg>=_pgs?'disabled':'')+'>Next →</button>';
   var pp=document.getElementById('pp'),np=document.getElementById('np');
   if(pp)pp.addEventListener('click',function(){load(_pg-1);window.scrollTo(0,0);});
@@ -286,9 +381,13 @@ function pgn(){
 
 function skel(){
   document.getElementById('jlist').innerHTML=
-    '<div class="sk-card"><div class="skeleton" style="width:42px;height:42px;border-radius:10px;flex-shrink:0"></div><div style="flex:1"><div class="skeleton" style="width:58%;height:15px;margin-bottom:8px"></div><div class="skeleton" style="width:38%;height:12px;margin-bottom:10px"></div><div class="skeleton" style="width:76%;height:11px"></div></div></div>'.repeat(6);
+    '<div class="sk-card"><div class="skeleton" style="width:44px;height:44px;border-radius:12px;flex-shrink:0"></div><div style="flex:1;padding:2px 0"><div class="skeleton" style="width:55%;height:14px;margin-bottom:8px"></div><div class="skeleton" style="width:35%;height:11px;margin-bottom:10px"></div><div class="skeleton" style="width:70%;height:10px"></div></div></div>'.repeat(6);
 }
 
+// Init
+document.querySelectorAll('.site-tab').forEach(function(b){
+  b.addEventListener('click',function(){switchSite(b.dataset.site);});
+});
 sidebar();
 load(1);
 document.getElementById('s-input').addEventListener('input',function(){
