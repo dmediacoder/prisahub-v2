@@ -71,6 +71,33 @@ const CATS={
   'log':       {label:'Logistics',                     group:'Estates',                                       inc:LOG_INC},
   'coord':     {label:'Coordinator',                   group:'Coordinator',                                   inc:COORD_INC},
   'est':       {label:'Estates',                       group:'Estates',                                       inc:EST_INC},
+
+  // NHS SCOTLAND
+  'scot-sw':    {label:'Support Worker',   group:'Scotland Support Worker', source:'scotland', inc:SW_INC,    exc:SW_EXC},
+  'scot-nurse': {label:'Staff Nurse',      group:'Scotland Nursing',        source:'scotland', inc:NURSE_INC, exc:NURSE_EXC},
+  'scot-admin': {label:'Admin Roles',      group:'Scotland Admin',          source:'scotland', inc:ADMIN_INC, exc:ADMIN_EXC},
+  'scot-hr':    {label:'HR',               group:'Scotland HR',             source:'scotland', inc:HR_INC,    exc:HR_EXC},
+  'scot-pm':    {label:'Project Manager',  group:'Scotland Project Manager',source:'scotland', inc:PM_INC,    exc:PM_EXC},
+  'scot-data':  {label:'Data Analyst',     group:'Scotland Data Analyst',   source:'scotland', inc:DATA_INC,  exc:DATA_EXC},
+  'scot-it':    {label:'IT / Engineering', group:'Scotland IT',             source:'scotland', inc:IT_INC,    exc:IT_EXC},
+  'scot-est':   {label:'Estates',          group:'Scotland Estates',        source:'scotland', inc:EST_INC},
+  'scot-sw2':   {label:'Social Worker',    group:'Scotland Social Worker',  source:'scotland', inc:SW2_INC,   exc:SW2_EXC},
+
+  // CIVIL SERVICE
+  'cs-admin':    {label:'Admin Officer',    group:'Civil Service Admin',            source:'civil', inc:['executive officer','administrative officer','admin officer','case officer','personal secretary','office manager']},
+  'cs-policy':   {label:'Policy',           group:'Civil Service Policy',           source:'civil', inc:['policy officer','policy adviser','policy manager','policy analyst','policy coordinator','policy researcher']},
+  'cs-data':     {label:'Data Analyst',     group:'Civil Service Data',             source:'civil', inc:['data analyst','data engineer','data scientist','information analyst','reporting analyst','performance analyst']},
+  'cs-tech':     {label:'Technology',       group:'Civil Service Technology',       source:'civil', inc:['software developer','software engineer','devops','cloud engineer','infrastructure engineer','it engineer']},
+  'cs-cyber':    {label:'Cyber Security',   group:'Civil Service Cyber Security',   source:'civil', inc:['cyber security','cybersecurity','information security','security analyst','security engineer']},
+  'cs-digital':  {label:'Digital',          group:'Civil Service Digital',          source:'civil', inc:['digital','product manager','product owner','delivery manager','agile','scrum','ux designer','user researcher']},
+  'cs-pm':       {label:'Project Manager',  group:'Civil Service Project Manager',  source:'civil', inc:['project manager','programme manager','project lead','delivery manager','pmo','transformation manager']},
+  'cs-hr':       {label:'HR',               group:'Civil Service HR',               source:'civil', inc:['hr adviser','hr advisor','hr officer','hr manager','human resources','workforce adviser','people adviser']},
+  'cs-fin':      {label:'Finance',          group:'Civil Service Finance',          source:'civil', inc:['finance officer','finance manager','accountant','financial analyst','payroll','treasury']},
+  'cs-econ':     {label:'Economist',        group:'Civil Service Economist',        source:'civil', inc:['economist','economic adviser','economic analyst','senior economist']},
+  'cs-ba':       {label:'Business Analyst', group:'Civil Service Business Analyst', source:'civil', inc:['business analyst','systems analyst','transformation analyst','change analyst','digital analyst','process analyst']},
+  'cs-delivery': {label:'Delivery Manager', group:'Civil Service Delivery Manager', source:'civil', inc:['delivery manager','agile delivery','programme delivery','digital delivery','service delivery manager']},
+  'cs-fraud':    {label:'Fraud Officer',    group:'Civil Service Fraud',            source:'civil', inc:['fraud officer','fraud investigator','fraud analyst','counter fraud','fraud manager','fraud prevention']},
+  'cs-case':     {label:'Caseworker',       group:'Civil Service Caseworker',       source:'civil', inc:['caseworker','case worker','case officer','case manager','decision maker','presenting officer']},
 };
 
 function passesFilter(job,cat,sponsorOnly){
