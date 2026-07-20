@@ -69,7 +69,7 @@ const CATS={
   'pm':        {label:'Project Manager',               group:'Project Manager',                               inc:PM_INC,   exc:PM_EXC},
   'ba':        {label:'Business Analyst',              group:'Business Analyst',                              inc:BA_INC,   exc:BA_EXC},
   'log':       {label:'Logistics',                     group:'Estates',                                       inc:LOG_INC},
-  'coord':     {label:'Coordinator',                   group:'Clinical',                                      inc:COORD_INC},
+  'coord':     {label:'Coordinator',                   group:'Coordinator',                                   inc:COORD_INC},
   'est':       {label:'Estates',                       group:'Estates',                                       inc:EST_INC},
 };
 
@@ -112,7 +112,8 @@ export default async function handler(req,res){
     if(!category)return res.status(200).json({total:0,page:1,pages:0,jobs:[]});
     const cat=CATS[category];
     if(!cat)return res.status(404).json({error:'Unknown category: '+category});
-    const url=SUPABASE_URL+'/rest/v1/jobs?category=eq.'+encodeURIComponent(cat.group)+'&select=*&order=posted.desc.nullslast&limit=1000';
+    const sourceFilter = cat.source ? '&source=eq.'+encodeURIComponent(cat.source) : '';
+    const url=SUPABASE_URL+'/rest/v1/jobs?category=eq.'+encodeURIComponent(cat.group)+sourceFilter+'&select=*&order=posted.desc.nullslast&limit=1000';
     const r=await fetch(url,{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
     if(!r.ok){const txt=await r.text();return res.status(500).json({error:'Supabase error',status:r.status,detail:txt});}
     const allJobs=await r.json();
