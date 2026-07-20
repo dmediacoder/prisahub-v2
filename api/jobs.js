@@ -94,7 +94,7 @@ function passesFilter(job,cat,sponsorOnly){
   const loc=(job.location||'').toLowerCase();
   if(cat.exLoc&&loc.includes(cat.exLoc))return false;
   if(cat.loc&&!loc.includes(cat.loc))return false;
-  if(sponsorOnly&&!job.hasSponsor)return false;
+  if(sponsorOnly&&!job.hassponsor)return false;
   if(cat.exc&&cat.exc.some(x=>t.includes(x)))return false;
   if(cat.inc&&!cat.inc.some(x=>t.includes(x)))return false;
   return true;
@@ -120,6 +120,6 @@ export default async function handler(req,res){
     const filtered=allJobs.filter(j=>passesFilter(j,cat,sponsorOnly));
     filtered.sort((a,b)=>{const da=parseDate(a.posted),db=parseDate(b.posted);if(!da&&!db)return 0;if(!da)return 1;if(!db)return -1;return db<da?-1:db>da?1:0;});
     const total=filtered.length,pages=Math.max(1,Math.ceil(total/per)),start=(pg-1)*per;
-    return res.status(200).json({fetchedAt:new Date().toISOString(),total,page:pg,pages,jobs:filtered.slice(start,start+per).map(j=>({id:j.id,title:j.title,organisation:j.organisation,location:j.location,salary:j.salary,band:j.band,postedDate:j.posted,closingDate:j.closing,contractType:j.contract,workingPattern:j.pattern,hasSponsor:j.hasSponsor,url:j.url,category:cat.label,group:cat.group}))});
+    return res.status(200).json({fetchedAt:new Date().toISOString(),total,page:pg,pages,jobs:filtered.slice(start,start+per).map(j=>({id:j.id,title:j.title,organisation:j.organisation,location:j.location,salary:j.salary,band:j.band,postedDate:j.posted,closingDate:j.closing,contractType:j.contract,workingPattern:j.pattern,hassponsor:j.hassponsor,url:j.url,category:cat.label,group:cat.group}))});
   }catch(e){return res.status(500).json({error:e.message});}
 }
