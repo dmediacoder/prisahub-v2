@@ -38,12 +38,25 @@ function parseJobDetail(html) {
     if (b) band = parseInt(b[0]);
   }
 
-  // Certificate of Sponsorship
-  const hassponsor =
-    text.includes('certificate of sponsorship') ||
-    text.includes('skilled worker sponsorship') ||
-    text.includes('visa sponsorship') ||
-    text.includes('sponsorship to work in the uk');
+  // Certificate of Sponsorship / Skilled Worker Visa
+  // NHS Jobs shows: "Skilled worker visa sponsorship" with value "Available"
+  // We check for the field AND that it says available (not "not available")
+  let hassponsor = false;
+  if (text.includes('skilled worker visa')) {
+    // Check the value is 'available' not 'not available'
+    const visaIdx = text.indexOf('skilled worker visa');
+    const nearby = text.slice(visaIdx, visaIdx + 200);
+    if (nearby.includes('available') && !nearby.includes('not available')) {
+      hassponsor = true;
+    }
+  }
+  // Also catch other sponsorship phrases
+  if (!hassponsor) {
+    hassponsor = text.includes('certificate of sponsorship') ||
+                 text.includes('skilled worker sponsorship') ||
+                 text.includes('sponsorship available') ||
+                 (text.includes('sponsorship') && text.includes('welcome'));
+  }
 
   // Working pattern - get from detail page (more reliable than search results)
   let workingPattern = '';
